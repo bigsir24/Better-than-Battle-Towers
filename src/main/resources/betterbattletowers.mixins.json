@@ -8,6 +8,9 @@
     ],
     "client": [
     ],
+    "server": [
+      "ChunkProviderServerMixin"
+    ],
     "injectors": {
         "defaultRequire": 1
   }
