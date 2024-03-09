@@ -163,7 +163,7 @@ public class WorldGenTower extends WorldFeature
 
 								if(j4 < 4 && j4 > -5)
 								{
-									//world.setBlock(i6, k6, l6, 0);
+									world.setBlock(i6, k6, l6, 0);
 								}
 
 								continue;
@@ -187,7 +187,7 @@ public class WorldGenTower extends WorldFeature
 							}
 							else
 							{
-								//world.setBlock(i6, k6, l6, 0);
+								world.setBlock(i6, k6, l6, 0);
 							}
 
 							continue;
@@ -229,7 +229,7 @@ public class WorldGenTower extends WorldFeature
 								}
 								else
 								{
-									//world.setBlock(i6, k6, l6, 0);
+									world.setBlock(i6, k6, l6, 0);
 								}
 
 								continue;
@@ -246,7 +246,7 @@ public class WorldGenTower extends WorldFeature
 							}
 							else
 							{
-								//world.setBlock(i6, k6, l6, 0);
+								world.setBlock(i6, k6, l6, 0);
 							}
 
 							continue;
@@ -268,7 +268,7 @@ public class WorldGenTower extends WorldFeature
 								world.setBlock(i6, k6, l6, Block.stonePolished.id);
 							} else
 							{
-								//world.setBlock(i6, k6, l6, 0);
+								world.setBlock(i6, k6, l6, 0);
 							}
 							continue;
 						}
@@ -376,7 +376,7 @@ public class WorldGenTower extends WorldFeature
 				j6 += j1;
 				if(world.getBlockId(k4, k5, j6) == Block.stonePolished.id && world.getBlockId(k4, k5 + 1, j6) != Block.mobspawner.id)
 				{
-					//world.setBlock(k4, k5, j6, 0);
+					world.setBlock(k4, k5, j6, 0);
 				}
 			}
 

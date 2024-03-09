@@ -27,11 +27,11 @@ public class EntityGolem extends EntityMonster
 		health = 150 + 150 * i;
 		setSize(1.6F, 3.4F);
 		xRot = 0.0F;
-		field_21481_field_20158_dormant = 1;
+		dormant = 1;
 		pathToEntity = 0;
-		field_21479_field_20159_growl = 0;
+		growl = 0;
 		fireImmune = true;
-		field_21480_field_20161_drops = 2 + 2 * i;
+		drops = 2 + 2 * i;
 		moveTo(x, y, z, 0.0F, 0.0F);
 	}
 
@@ -44,11 +44,11 @@ public class EntityGolem extends EntityMonster
 		health = 300;
 		setSize(1.6F, 3.4F);
 		xRot = 0.0F;
-		field_21481_field_20158_dormant = 0;
+		dormant = 0;
 		pathToEntity = 0;
-		field_21479_field_20159_growl = 0;
+		growl = 0;
 		fireImmune = true;
-		field_21480_field_20161_drops = 1;
+		drops = 1;
 		moveTo(x, y, z, 0.0F, 0.0F);
 	}
 
@@ -83,7 +83,7 @@ public class EntityGolem extends EntityMonster
 
 		if(!world.isClientSide)
 		{
-			int i = field_21480_field_20161_drops - random.nextInt(2);
+			int i = drops - random.nextInt(2);
 			for(int j = 0; j < i; j++)
 			{
 				spawnAtLocation(Item.diamond.id, 1);
@@ -113,20 +113,21 @@ public class EntityGolem extends EntityMonster
 		pathToEntity = 150;
 	}
 
-	protected void func_21475_func_20155_look_()
+	protected void lookForPlayer()
 	{
-		if(field_21481_field_20158_dormant == 1)
+		if(dormant == 1)
 		{
 			EntityPlayer entityplayer = world.getClosestPlayerToEntity(this, 6D);
 			if(entityplayer != null && canEntityBeSeen(entityplayer))
 			{
-				field_21481_field_20158_dormant = 0;
+				dormant = 0;
 				world.playSoundEffect(SoundType.CAVE_SOUNDS, x, y, z, "ambient.cave.cave", 0.7F, 1.0F);
 				world.playSoundAtEntity(this, "golemawaken", getSoundVolume() * 2.0F, ((random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F) * 1.8F);
 				texture = "/mob/golem/golem.png";
 				pathToEntity = 175;
 			}
-		} else
+		}
+		else
 		{
 			List list = world.getEntitiesWithinAABBExcludingEntity(this, bb.expand(6D, 6D, 6D));
 			boolean flag = false;
@@ -145,7 +146,7 @@ public class EntityGolem extends EntityMonster
 				}
 				i++;
 			} while(true);
-			if(!flag && entityToAttack != null || field_21479_field_20159_growl == 1)
+			if(!flag && entityToAttack != null || growl == 1)
 			{
 				pathToEntity--;
 			} else
@@ -158,37 +159,38 @@ public class EntityGolem extends EntityMonster
 	@Override
 	public void tick()
 	{
-		if(field_21481_field_20158_dormant == 0)
+		if(dormant == 0)
 		{
-			if(pathToEntity <= 0 && field_21479_field_20159_growl == 0)
+			if(pathToEntity <= 0 && growl == 0)
 			{
-				if(field_21479_field_20159_growl == 0 && (entityToAttack instanceof EntityPlayer) && world.getClosestPlayerToEntity(this, 24D) == null)
+				if(growl == 0 && (entityToAttack instanceof EntityPlayer) && world.getClosestPlayerToEntity(this, 24D) == null)
 				{
 					entityToAttack = null;
-				} else
-				if(!func_21476_func_20154_happyMan())
+				}
+				else if(!isHappy())
 				{
 					world.playSoundAtEntity(this, "golemspecial", getSoundVolume() * 2.0F, ((random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F) * 1.8F);
-					yd += 0.90000000000000002D; // ORIGINAL: motionY
-					field_21479_field_20159_growl = 1;
-				} else
+					yd += 0.90000000000000002D;
+					growl = 1;
+				}
+				else
 				{
 					pathToEntity = 150;
 				}
 			} else
-			if((pathToEntity <= -30 || onGround) && field_21479_field_20159_growl == 1)
+			if((pathToEntity <= -30 || onGround) && growl == 1)
 			{
 				if(health <= 425)
 				{
 					health += 25;
 				}
-				world.createExplosion(this, x, y, z, 4.5F + (float)(field_21480_field_20161_drops - 2) / 4F);
+				world.createExplosion(this, x, y, z, 4.5F + (float)(drops - 2) / 4F);
 				pathToEntity = 125;
-				field_21479_field_20159_growl = 0;
+				growl = 0;
 			}
 			super.tick();
 		}
-		func_21475_func_20155_look_();
+		lookForPlayer();
 	}
 
 	@Override
@@ -198,10 +200,10 @@ public class EntityGolem extends EntityMonster
 
 		if (canSave)
 		{
-			nbttagcompound.putByte("isDormant", (byte)field_21481_field_20158_dormant);
-			nbttagcompound.putByte("hasGrowled", (byte)field_21479_field_20159_growl);
+			nbttagcompound.putByte("isDormant", (byte) dormant);
+			nbttagcompound.putByte("hasGrowled", (byte) growl);
 			nbttagcompound.putByte("rageCounter", (byte)pathToEntity);
-			nbttagcompound.putByte("Drops", (byte)field_21480_field_20161_drops);
+			nbttagcompound.putByte("Drops", (byte) drops);
 		}
 
 		return canSave;
@@ -211,12 +213,12 @@ public class EntityGolem extends EntityMonster
 	public void load(CompoundTag nbttagcompound)
 	{
 		super.load(nbttagcompound);
-		field_21481_field_20158_dormant = nbttagcompound.getByte("isDormant") & 0xff;
-		field_21479_field_20159_growl = nbttagcompound.getByte("hasGrowled") & 0xff;
+		dormant = nbttagcompound.getByte("isDormant") & 0xff;
+		growl = nbttagcompound.getByte("hasGrowled") & 0xff;
 		pathToEntity = nbttagcompound.getByte("rageCounter") & 0xff;
-		field_21480_field_20161_drops = nbttagcompound.getByte("Drops") & 0xff;
+		drops = nbttagcompound.getByte("Drops") & 0xff;
 		moveSpeed = 0.35F + (float)((double)(450 - health) / 1750D);
-		if(field_21481_field_20158_dormant == 1)
+		if(dormant == 1)
 		{
 			texture = "/mob/golem/golemdormant.png";
 		} else
@@ -226,7 +228,7 @@ public class EntityGolem extends EntityMonster
 		attackStrength = 8;
 	}
 
-	protected boolean func_21476_func_20154_happyMan()
+	protected boolean isHappy()
 	{
 		return false; // IDK wtf this code was for so he's just going to be ANGRY ALL THE TIME!!!!!!
 					  // My assumption is this was for compatibility with some mod.
@@ -273,7 +275,7 @@ public class EntityGolem extends EntityMonster
 	@Override
 	public String getLivingSound()
 	{
-		if(field_21481_field_20158_dormant == 0)
+		if(dormant == 0)
 		{
 			return "golem";
 		} else
@@ -300,10 +302,10 @@ public class EntityGolem extends EntityMonster
 		return Item.brickClay.id;
 	}
 
-	private int field_21481_field_20158_dormant;
+	private int dormant;
 	private int pathToEntity;
-	private int field_21479_field_20159_growl;
-	private int field_21480_field_20161_drops;
+	private int growl;
+	private int drops;
 	public Entity field_21478_field_20156_b;
 	public int field_21477_field_20160_c;
 }

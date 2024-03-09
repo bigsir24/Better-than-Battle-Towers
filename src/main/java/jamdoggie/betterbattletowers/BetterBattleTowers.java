@@ -9,6 +9,7 @@ import net.minecraft.core.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import turniplabs.halplibe.helper.EntityHelper;
+import turniplabs.halplibe.helper.SoundHelper;
 import turniplabs.halplibe.util.GameStartEntrypoint;
 import turniplabs.halplibe.util.RecipeEntrypoint;
 
@@ -38,6 +39,8 @@ public class BetterBattleTowers implements ModInitializer, GameStartEntrypoint, 
 		rarity = 3;
 
 		EntityHelper.Core.createEntity(EntityGolem.class, 101, "TowerGolem");
+
+
     }
 
 	@Override
