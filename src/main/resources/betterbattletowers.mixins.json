@@ -7,7 +7,6 @@
       "ChunkProviderStaticMixin"
     ],
     "client": [
-      "SoundManagerMixin"
     ],
     "server": [
       "ChunkProviderServerMixin"

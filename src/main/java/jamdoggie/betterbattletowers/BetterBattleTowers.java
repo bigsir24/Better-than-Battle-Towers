@@ -62,6 +62,14 @@ public class BetterBattleTowers implements ModInitializer, GameStartEntrypoint, 
 	public void onInitializeClient()
 	{
 		EntityHelper.Client.assignEntityRenderer(EntityGolem.class, new RenderGolem());
+		SoundHelper.Client.addSound(BetterBattleTowers.MOD_ID, "golem1.ogg");
+		SoundHelper.Client.addSound(BetterBattleTowers.MOD_ID, "golem3.ogg");
+		SoundHelper.Client.addSound(BetterBattleTowers.MOD_ID, "golemawaken.ogg");
+		SoundHelper.Client.addSound(BetterBattleTowers.MOD_ID, "golemdeath.ogg");
+		SoundHelper.Client.addSound(BetterBattleTowers.MOD_ID, "golemhurt2.ogg");
+		SoundHelper.Client.addSound(BetterBattleTowers.MOD_ID, "golemhurt3.ogg");
+		SoundHelper.Client.addSound(BetterBattleTowers.MOD_ID, "golemspecial1.ogg");
+		SoundHelper.Client.addSound(BetterBattleTowers.MOD_ID, "golemspecial2.ogg");
 	}
 
 	public void GenerateSurface(World world, Random random, int chunkX, int chunkZ)

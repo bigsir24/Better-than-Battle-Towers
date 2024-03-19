@@ -122,7 +122,7 @@ public class EntityGolem extends EntityMonster
 			{
 				dormant = 0;
 				world.playSoundEffect(SoundType.CAVE_SOUNDS, x, y, z, "ambient.cave.cave", 0.7F, 1.0F);
-				world.playSoundAtEntity(this, "golemawaken", getSoundVolume() * 2.0F, ((random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F) * 1.8F);
+				world.playSoundAtEntity(this, BetterBattleTowers.MOD_ID + ".golemawaken", getSoundVolume() * 2.0F, ((random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F) * 1.8F);
 				texture = "/mob/golem/golem.png";
 				pathToEntity = 175;
 			}
@@ -169,7 +169,7 @@ public class EntityGolem extends EntityMonster
 				}
 				else if(!isHappy())
 				{
-					world.playSoundAtEntity(this, "golemspecial", getSoundVolume() * 2.0F, ((random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F) * 1.8F);
+					world.playSoundAtEntity(this, BetterBattleTowers.MOD_ID + ".golemspecial", getSoundVolume() * 2.0F, ((random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F) * 1.8F);
 					yd += 0.90000000000000002D;
 					growl = 1;
 				}
@@ -277,7 +277,7 @@ public class EntityGolem extends EntityMonster
 	{
 		if(dormant == 0)
 		{
-			return "golem";
+			return BetterBattleTowers.MOD_ID + ".golem";
 		} else
 		{
 			return null;
@@ -287,13 +287,13 @@ public class EntityGolem extends EntityMonster
 	@Override
 	protected String getHurtSound()
 	{
-		return "golemhurt";
+		return BetterBattleTowers.MOD_ID + ".golemhurt";
 	}
 
 	@Override
 	protected String getDeathSound()
 	{
-		return "golemdeath";
+		return BetterBattleTowers.MOD_ID + ".golemdeath";
 	}
 
 	@Override
