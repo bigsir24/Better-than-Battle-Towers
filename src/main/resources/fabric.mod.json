@@ -6,7 +6,8 @@
   "name": "Better than Battle Towers",
   "description": "A version of the original Battle Towers mod for Better than Adventure.",
   "authors": [
-    "JamDoggie"
+    "JamDoggie",
+		"LukeisStuff"
   ],
   "contact": {
     "homepage": "",
@@ -24,6 +25,9 @@
 		"beforeGameStart": [
 			"jamdoggie.betterbattletowers.BetterBattleTowers"
 		],
+		"beforeClientStart": [
+			"jamdoggie.betterbattletowers.BetterBattleTowers"
+		],
 		"afterGameStart": [
 			"jamdoggie.betterbattletowers.BetterBattleTowers"
 		],
@@ -39,7 +43,7 @@
   ],
 
   "depends": {
-		"minecraft": "~7.1-beta.1",
+		"minecraft": "~7.1",
     "fabricloader": ">=0.13.3"
   },
   "suggests": {

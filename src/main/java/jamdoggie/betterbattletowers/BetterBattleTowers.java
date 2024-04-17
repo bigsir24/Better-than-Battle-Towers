@@ -5,18 +5,22 @@ import jamdoggie.betterbattletowers.entity.render.RenderGolem;
 import jamdoggie.betterbattletowers.worldgen.WorldGenTower;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
+import net.minecraft.client.gui.guidebook.mobs.MobInfoRegistry;
+import net.minecraft.core.item.Item;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import turniplabs.halplibe.helper.EntityHelper;
 import turniplabs.halplibe.helper.SoundHelper;
+import turniplabs.halplibe.util.ClientStartEntrypoint;
 import turniplabs.halplibe.util.GameStartEntrypoint;
 import turniplabs.halplibe.util.RecipeEntrypoint;
 
 import java.util.Random;
 
 
-public class BetterBattleTowers implements ModInitializer, GameStartEntrypoint, RecipeEntrypoint, ClientModInitializer
+public class BetterBattleTowers implements ModInitializer, GameStartEntrypoint, RecipeEntrypoint, ClientModInitializer, ClientStartEntrypoint
 {
     public static final String MOD_ID = "betterbattletowers";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
@@ -45,17 +49,23 @@ public class BetterBattleTowers implements ModInitializer, GameStartEntrypoint, 
 
 	@Override
 	public void beforeGameStart() {
+	}
 
+	@Override
+	public void beforeClientStart() {
+		MobInfoRegistry.register(EntityGolem.class, "betterbattletowers.golem.name", "betterbattletowers.golem.desc", 300, 10000, new MobInfoRegistry.MobDrop[]{new MobInfoRegistry.MobDrop(new ItemStack(Item.diamond), 1.0f, 1 ,1)});
+	}
+
+	@Override
+	public void afterClientStart() {
 	}
 
 	@Override
 	public void afterGameStart() {
-
 	}
 
 	@Override
 	public void onRecipesReady() {
-
 	}
 
 	@Override

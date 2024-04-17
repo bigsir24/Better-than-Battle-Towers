@@ -21,6 +21,7 @@ public class EntityGolem extends EntityMonster
 	public EntityGolem(World world, int i)
 	{
 		super(world);
+		this.scoreValue = 10000;
 		texture = "/mob/golem/golemdormant.png";
 		moveSpeed = 0.35F;
 		attackStrength = 8;
@@ -37,6 +38,7 @@ public class EntityGolem extends EntityMonster
 	public EntityGolem(World world)
 	{
 		super(world);
+		this.scoreValue = 10000;
 		texture = "/mob/golem/golem.png";
 		moveSpeed = 0.35F;
 		attackStrength = 8;
