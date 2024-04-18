@@ -7,7 +7,7 @@ import net.minecraft.core.entity.Entity;
 import net.minecraft.core.entity.monster.EntityMonster;
 import net.minecraft.core.entity.player.EntityPlayer;
 import net.minecraft.core.item.Item;
-import net.minecraft.core.sound.SoundType;
+import net.minecraft.core.sound.SoundCategory;
 import net.minecraft.core.util.helper.DamageType;
 import net.minecraft.core.util.helper.MathHelper;
 import net.minecraft.core.world.World;
@@ -21,10 +21,10 @@ public class EntityGolem extends EntityMonster
 	public EntityGolem(World world, int i)
 	{
 		super(world);
+		this.scoreValue = 10000;
 		texture = "/mob/golem/golemdormant.png";
 		moveSpeed = 0.35F;
 		attackStrength = 8;
-		health = 150 + 150 * i;
 		setSize(1.6F, 3.4F);
 		xRot = 0.0F;
 		dormant = 1;
@@ -38,10 +38,10 @@ public class EntityGolem extends EntityMonster
 	public EntityGolem(World world)
 	{
 		super(world);
+		this.scoreValue = 10000;
 		texture = "/mob/golem/golem.png";
 		moveSpeed = 0.35F;
 		attackStrength = 8;
-		health = 300;
 		setSize(1.6F, 3.4F);
 		xRot = 0.0F;
 		dormant = 0;
@@ -50,6 +50,10 @@ public class EntityGolem extends EntityMonster
 		fireImmune = true;
 		drops = 1;
 		moveTo(x, y, z, 0.0F, 0.0F);
+	}
+
+	public int getMaxHealth() {
+		return 300;
 	}
 
 	@Override
@@ -67,7 +71,7 @@ public class EntityGolem extends EntityMonster
 	@Override
 	public void remove()
 	{
-		if(health <= 0 || world.difficultySetting == 0)
+		if(getHealth() <= 0 || world.difficultySetting == 0)
 		{
 			super.remove();
 		}
@@ -102,7 +106,7 @@ public class EntityGolem extends EntityMonster
 
 	public void knockBack(Entity entity, int i, double d, double d1)
 	{
-		moveSpeed = 0.35F + (float)((double)(450 - health) / 1750D);
+		moveSpeed = 0.35F + (float)((double)(450 - getHealth()) / 1750D);
 		if(random.nextInt(5) == 0)
 		{
 			// ORIGINAL: motionX, motionZ, motionY
@@ -121,15 +125,15 @@ public class EntityGolem extends EntityMonster
 			if(entityplayer != null && canEntityBeSeen(entityplayer))
 			{
 				dormant = 0;
-				world.playSoundEffect(SoundType.CAVE_SOUNDS, x, y, z, "ambient.cave.cave", 0.7F, 1.0F);
-				world.playSoundAtEntity(this, BetterBattleTowers.MOD_ID + ".golemawaken", getSoundVolume() * 2.0F, ((random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F) * 1.8F);
+				world.playSoundEffect(null, SoundCategory.CAVE_SOUNDS, x, y, z, "ambient.cave.cave", 0.7F, 1.0F);
+				world.playSoundAtEntity(null, this, BetterBattleTowers.MOD_ID + ".golemawaken", getSoundVolume() * 2.0F, ((random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F) * 1.8F);
 				texture = "/mob/golem/golem.png";
 				pathToEntity = 175;
 			}
 		}
 		else
 		{
-			List list = world.getEntitiesWithinAABBExcludingEntity(this, bb.expand(6D, 6D, 6D));
+			List<Entity> list = world.getEntitiesWithinAABBExcludingEntity(this, bb.expand(6D, 6D, 6D));
 			boolean flag = false;
 			int i = 0;
 			do
@@ -138,7 +142,7 @@ public class EntityGolem extends EntityMonster
 				{
 					break;
 				}
-				Entity entity = (Entity)list.get(i);
+				Entity entity = list.get(i);
 				if(entity == entityToAttack)
 				{
 					flag = true;
@@ -163,13 +167,13 @@ public class EntityGolem extends EntityMonster
 		{
 			if(pathToEntity <= 0 && growl == 0)
 			{
-				if(growl == 0 && (entityToAttack instanceof EntityPlayer) && world.getClosestPlayerToEntity(this, 24D) == null)
+				if(entityToAttack instanceof EntityPlayer && world.getClosestPlayerToEntity(this, 24D) == null)
 				{
 					entityToAttack = null;
 				}
 				else if(!isHappy())
 				{
-					world.playSoundAtEntity(this, BetterBattleTowers.MOD_ID + ".golemspecial", getSoundVolume() * 2.0F, ((random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F) * 1.8F);
+					world.playSoundAtEntity(null, this, BetterBattleTowers.MOD_ID + ".golemspecial", getSoundVolume() * 2.0F, ((random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F) * 1.8F);
 					yd += 0.90000000000000002D;
 					growl = 1;
 				}
@@ -180,9 +184,9 @@ public class EntityGolem extends EntityMonster
 			} else
 			if((pathToEntity <= -30 || onGround) && growl == 1)
 			{
-				if(health <= 425)
+				if(getHealth() <= 425)
 				{
-					health += 25;
+					prevHealth += 25;
 				}
 				world.createExplosion(this, x, y, z, 4.5F + (float)(drops - 2) / 4F);
 				pathToEntity = 125;
@@ -217,7 +221,7 @@ public class EntityGolem extends EntityMonster
 		growl = nbttagcompound.getByte("hasGrowled") & 0xff;
 		pathToEntity = nbttagcompound.getByte("rageCounter") & 0xff;
 		drops = nbttagcompound.getByte("Drops") & 0xff;
-		moveSpeed = 0.35F + (float)((double)(450 - health) / 1750D);
+		moveSpeed = 0.35F + (float)((double)(450 - getHealth()) / 1750D);
 		if(dormant == 1)
 		{
 			texture = "/mob/golem/golemdormant.png";
@@ -230,7 +234,7 @@ public class EntityGolem extends EntityMonster
 
 	protected boolean isHappy()
 	{
-		return false; // IDK wtf this code was for so he's just going to be ANGRY ALL THE TIME!!!!!!
+		return false; // IDK wtf this code was for, so he's just going to be ANGRY ALL THE TIME!!!!!!
 					  // My assumption is this was for compatibility with some mod.
 
 		/*int i = -1;
