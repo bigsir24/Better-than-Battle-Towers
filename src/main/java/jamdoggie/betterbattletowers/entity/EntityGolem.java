@@ -65,7 +65,7 @@ public class EntityGolem extends EntityMonster
 	@Override
 	public String getEntityTexture()
 	{
-		return "assets/" + BetterBattleTowers.MOD_ID + "/textures" + texture;
+		return "/assets/" + BetterBattleTowers.MOD_ID + "/textures" + texture;
 	}
 
 	@Override
