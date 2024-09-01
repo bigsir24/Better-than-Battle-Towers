@@ -21,6 +21,14 @@ public class RenderGolem extends MobRenderer<EntityGolem>
 	}
 
 	@Override
+	public void doRenderPreview(EntityGolem entity, double x, double y, double z, float yaw, float partialTick) {
+		GL11.glPushMatrix();
+		GL11.glTranslatef(0,-2,0);
+		super.doRenderPreview(entity, x, y, z, yaw, partialTick);
+		GL11.glPopMatrix();
+	}
+
+	@Override
 	protected void preRenderCallback(EntityGolem entityliving, float f)
 	{
 		func_15310_scalegolem(entityliving, f);
