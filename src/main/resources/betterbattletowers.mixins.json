@@ -1,17 +1,18 @@
 {
-    "required": true,
-    "minVersion": "0.8",
-    "package": "jamdoggie.betterbattletowers.mixins",
-    "compatibilityLevel": "JAVA_8",
-    "mixins": [
-      "ChunkProviderStaticMixin"
-    ],
-    "client": [
-    ],
-    "server": [
-      "ChunkProviderServerMixin"
-    ],
-    "injectors": {
-        "defaultRequire": 1
+  "required": true,
+  "minVersion": "0.8",
+  "package": "jamdoggie.betterbattletowers.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "ChunkProviderStaticMixin"
+  ],
+  "client": [
+    "MobPageMixin"
+  ],
+  "server": [
+    "ChunkProviderServerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
   }
 }
