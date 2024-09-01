@@ -9,6 +9,7 @@ import net.minecraft.client.gui.guidebook.mobs.MobInfoRegistry;
 import net.minecraft.core.item.Item;
 import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.world.World;
+import net.minecraft.core.world.type.WorldTypeOverworldExtended;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import turniplabs.halplibe.helper.EntityHelper;
@@ -90,6 +91,7 @@ public class BetterBattleTowers implements ModInitializer, GameStartEntrypoint, 
 			{
 				int k = chunkX + random.nextInt(16) + 8;
 				int l = random.nextInt(16) + 64;
+				if(world.worldType instanceof WorldTypeOverworldExtended) l += 64;
 				int i1 = chunkZ + random.nextInt(16) + 8;
 
 				if((new WorldGenTower()).generate(world, random, k, l, i1))

@@ -8,6 +8,7 @@ import net.minecraft.core.item.Item;
 import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.world.World;
 import net.minecraft.core.world.generate.feature.WorldFeature;
+import net.minecraft.core.world.type.WorldTypeOverworldExtended;
 
 import java.util.Random;
 
@@ -104,9 +105,12 @@ public class WorldGenTower extends WorldFeature
 		currentFloor = 1;
 		field_22237_field_20341_topFloor = 0;
 
-		for(; k2 < 120; k2 += 7)
+		int offset = 0;
+		if(world.worldType instanceof WorldTypeOverworldExtended) offset = 64;
+
+		for(; k2 < 120 + offset; k2 += 7)
 		{
-			if(k2 + 7 >= 120)
+			if(k2 + 7 >= 120 + offset)
 			{
 				field_22237_field_20341_topFloor = 1;
 			}
