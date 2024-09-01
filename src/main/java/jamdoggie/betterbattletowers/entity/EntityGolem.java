@@ -25,6 +25,7 @@ public class EntityGolem extends EntityMonster
 		texture = "/mob/golem/golemdormant.png";
 		moveSpeed = 0.35F;
 		attackStrength = 8;
+		this.setHealthRaw(150 + 150 * i);
 		setSize(1.6F, 3.4F);
 		xRot = 0.0F;
 		dormant = 1;
@@ -42,6 +43,7 @@ public class EntityGolem extends EntityMonster
 		texture = "/mob/golem/golem.png";
 		moveSpeed = 0.35F;
 		attackStrength = 8;
+		this.setHealthRaw(300);
 		setSize(1.6F, 3.4F);
 		xRot = 0.0F;
 		dormant = 0;
@@ -52,8 +54,9 @@ public class EntityGolem extends EntityMonster
 		moveTo(x, y, z, 0.0F, 0.0F);
 	}
 
+	@Override
 	public int getMaxHealth() {
-		return 300;
+		return 450;
 	}
 
 	@Override
@@ -104,6 +107,7 @@ public class EntityGolem extends EntityMonster
 		world.sendTrackedEntityStatusUpdatePacket(this, (byte)3);
 	}
 
+	@Override
 	public void knockBack(Entity entity, int i, double d, double d1)
 	{
 		moveSpeed = 0.35F + (float)((double)(450 - getHealth()) / 1750D);
@@ -195,6 +199,11 @@ public class EntityGolem extends EntityMonster
 			super.tick();
 		}
 		lookForPlayer();
+	}
+
+	@Override
+	public boolean hurt(Entity attacker, int i, DamageType type) {
+		return dormant != 1 && super.hurt(attacker, i, type);
 	}
 
 	@Override
