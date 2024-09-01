@@ -2,10 +2,12 @@ package jamdoggie.betterbattletowers.worldgen;
 
 import jamdoggie.betterbattletowers.entity.EntityGolem;
 import net.minecraft.core.block.Block;
+import net.minecraft.core.block.BlockChest;
 import net.minecraft.core.block.entity.TileEntityChest;
 import net.minecraft.core.block.entity.TileEntityMobSpawner;
 import net.minecraft.core.item.Item;
 import net.minecraft.core.item.ItemStack;
+import net.minecraft.core.util.helper.Direction;
 import net.minecraft.core.world.World;
 import net.minecraft.core.world.generate.feature.WorldFeature;
 import net.minecraft.core.world.type.WorldTypeOverworldExtended;
@@ -354,7 +356,8 @@ public class WorldGenTower extends WorldFeature
 
 			for(int k3 = 0; k3 < 2; k3++)
 			{
-				world.setBlockWithNotify(l - k3, k2 + 7, j1 - 3, Block.chestLegacy.id);
+				world.setBlockWithNotify(l - k3, k2 + 7, j1 - 3, Block.chestPlanksOak.id);
+				((BlockChest)Block.chestPlanksOak).setDirection(world, l - k3, k2 + 7, j1 - 3, Direction.SOUTH);
 				TileEntityChest tileEntityChest = (TileEntityChest)world.getBlockTileEntity(l - k3, k2 + 7, j1 - 3);
 				for(int j5 = 0; j5 < 1 + k3 + l2; j5++)
 				{
@@ -366,6 +369,8 @@ public class WorldGenTower extends WorldFeature
 				}
 
 			}
+			((BlockChest)Block.chestPlanksOak).setType(world, l, k2 + 7, j1 - 3, BlockChest.Type.RIGHT);
+			((BlockChest)Block.chestPlanksOak).setType(world, l - 1, k2 + 7, j1 - 3, BlockChest.Type.LEFT);
 
 			for(int l3 = 0; l3 < (currentFloor * 4 + l2) - 8 && field_22237_field_20341_topFloor != 1; l3++)
 			{
