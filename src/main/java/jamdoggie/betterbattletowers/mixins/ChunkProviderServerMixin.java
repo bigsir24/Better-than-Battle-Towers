@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Random;
 
 @Mixin(value = ChunkProviderServer.class, remap = false)
-public class ChunkProviderServerMixin
+public abstract class ChunkProviderServerMixin
 {
 
 	@Shadow
